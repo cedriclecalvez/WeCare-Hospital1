@@ -1,5 +1,5 @@
-import { Model, DataTypes } from "sequelize"
-import db from "../../config/database"
+import { Model, DataTypes } from 'sequelize';
+import db from '../../config/database';
 
 class User extends Model {
   static init(sequelize) {
@@ -12,34 +12,34 @@ class User extends Model {
       },
       {
         sequelize,
-        modelName: "User",
+        modelName: 'User',
       }
-    )
+    );
   }
 
   static associate(models) {
     // define association here
     // this.hasMany(models.Book, { as: 'books' })
-    return this
+    return this;
   }
 }
 
-User.init(db.sequelize)
+User.init(db.sequelize);
 
 const exclude = [
-  "access_token",
-  "refresh_token",
-  "updatedAt",
-  "createdAt",
-  "password",
-]
+  'access_token',
+  'refresh_token',
+  'updatedAt',
+  'createdAt',
+  'password',
+];
 
 User.beforeFind(async (user) => {
-  user.attributes = { exclude }
-})
+  user.attributes = { exclude };
+});
 
 User.beforeUpdate(async (user) => {
-  user.attributes = { exclude }
-})
+  user.attributes = { exclude };
+});
 
-export default User
+export default User;

@@ -1,9 +1,7 @@
-// import routesUser from './User';
-// import routesBook from './Book';
+import routesUser from '../modules/User/router';
 
-// const routes = {
-//   '/users': routesUser,
-//   '/books': routesBook
-// }
+const routes = {
+  '/users': routesUser,
+}
 
-// export default routes;
+export default routes;

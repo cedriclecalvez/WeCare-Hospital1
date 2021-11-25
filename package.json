@@ -13,9 +13,12 @@
     "@babel/node": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "eslint": "^8.3.0",
+    "eslint-config-airbnb": "^19.0.1",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.0.0",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "prettier": "^2.4.1"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
