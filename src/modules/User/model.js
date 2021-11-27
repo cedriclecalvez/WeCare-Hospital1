@@ -26,20 +26,20 @@ class User extends Model {
 
 User.init(db.sequelize);
 
-const exclude = [
-  'access_token',
-  'refresh_token',
-  'updatedAt',
-  'createdAt',
-  'password',
-];
+// const exclude = [
+//   'access_token',
+//   'refresh_token',
+//   'updatedAt',
+//   'createdAt',
+//   'password',
+// ];
 
-User.beforeFind(async (user) => {
-  user.attributes = { exclude };
-});
+// User.beforeFind(async (user) => {
+//   user.attributes = { exclude };
+// });
 
-User.beforeUpdate(async (user) => {
-  user.attributes = { exclude };
-});
+// User.beforeUpdate(async (user) => {
+//   user.attributes = { exclude };
+// });
 
 export default User;

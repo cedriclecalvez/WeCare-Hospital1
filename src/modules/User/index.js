@@ -1,10 +1,11 @@
-// import UserController from './controller';
-// import User from './model';
-// import router from './router';
+import UserController from './controller';
+import User from './model';
+import router from './router';
 
-// const models = User;
+const models = User;
+console.log("models:",models);
 
-// const controller = new UserController(models);
-// const routesUser = router(controller);
+const controller = new UserController(models);
+const routesUser = router(controller);
 
-// export default routesUser;
+export default routesUser;

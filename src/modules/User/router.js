@@ -1,14 +1,18 @@
-import { Router } from 'express';
-import userController from './controller';
+import { Router } from "express";
+// import UserController from './controller';
+// import isAuth from "../../middlewares/auth";
 import isAuth, { refreshAccess } from '../../middlewares/auth';
 
+const router = (controller) => {
+  const router = Router();
 
-const router = Router();
+  router.route("/auth/register").post(controller.register);
+  // router.route('/auth/alluser').get(controller.getAll);
+  // router.route('/auth/refresh').get(refreshAccess);
+  router.route('/auth/login').post(controller.login);
+  router.route("/allUsers").get(isAuth, controller.getAll);
+//   router.route("/allUsers").get(controller.getAll);
 
-router.route('/auth/register').post(userController.register);
-router.route('/auth/alluser').get(userController.getAll);
-router.route('/auth/refresh').get(refreshAccess);
-router.route('/test').post(userController.login);
-router.route('/auth/isAuth').get(isAuth, userController.getAll);
-
+  return router;
+};
 export default router;

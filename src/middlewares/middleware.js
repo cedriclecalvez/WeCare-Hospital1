@@ -3,6 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 // import the logger
 import logger from './logger';
+import cookieParser from 'cookie-parser';
 
 const cors = require('cors');
 
@@ -21,6 +22,7 @@ const middlewares = {
   apiLogger: morganMiddleware,
   json: express.json(),
   urlencoded: express.urlencoded({ extended: false }),
+  cookie: cookieParser()
 };
 
 export default middlewares;

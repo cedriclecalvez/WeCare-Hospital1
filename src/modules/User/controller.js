@@ -1,59 +1,78 @@
-import jwt from 'jsonwebtoken';
-import User from './model';
-import ApiError from '../../helpers/ApiError';
-import config from '../../config/constant';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import ApiError from "../../helpers/ApiError";
+import config from "../../config/constant";
+import User from "./model";
 
-const userController = {
-  getAll: async (req, res, next) => {
+class UserController {
+  #models;
+  constructor(models) {
+    this.#models = models;
+  }
+
+  getAll = async (req, res, next) => {
     try {
-      const users = await User.findAll();
-      res.status(200).json({ user: req.user, users });
+      const users = await this.#models.findAll();
+
+      res.status(200).json({ user: req.userID, users });
     } catch (err) {
       next(err);
     }
-  },
-  register: async (req, res, next) => {
+  };
+
+  register = async (req, res, next) => {
     try {
-      const user = await User.create({ ...req.body });
+      const password = await bcrypt.hash(req.body.password, 10);
+      console.log("password hashed: ", password);
+
+      const user = await this.#models.create({
+        email: req.body.email,
+        password,
+      });
       res.status(201).json(user);
     } catch (err) {
       next(err);
     }
-  },
-  login: async (req, res, next) => {
+  };
+
+  login = async (req, res, next) => {
     try {
       const { email, password } = { ...req.body };
 
-      const user = await User.findOne({
-        where: { email, password },
+      if (!email || !password) {
+        throw new ApiError(403, "missing email or password or both");
+      }
+
+      let user = await this.#models.findOne({
+        where: { email },
       });
 
-      if (!user)
-        throw new ApiError(
-          400,
-          'unable to find user with the spécified pair email/password'
-        );
+      if (!user) throw new ApiError(400, "unable to find user");
+
+      const result = await bcrypt.compare(password, user.password);
+      if (!result) throw new ApiError(403, "email/password incorrect");
 
       user.access_token = jwt.sign(
         { id: user.id, email: user.email },
-        config.jwt_secret,
-        { expiresIn: '5m' }
+        config.JWT_SECRET,
+        { expiresIn: "1h" }
       );
-      user.refresh_token = jwt.sign({ id: user.id }, config.jwt_secret, {
-        expiresIn: '60d',
+      user.refresh_token = jwt.sign({ id: user.id }, config.JWT_SECRET, {
+        expiresIn: "60d",
       });
 
       await user.save();
 
-      res.cookie('refresh_token', user.refresh_token, {
-        expiresIn: '60d',
+      res.header("Authorization", `Bearer ${user.access_token}`);
+      res.cookie("refresh_token", user.refresh_token, {
         httpOnly: true,
+        expiresIn: "1h",
       });
       res.status(200).json({ token: user.access_token });
     } catch (err) {
       next(err);
     }
-  },
-};
+  };
+}
 
-export default userController;
+export default UserController;

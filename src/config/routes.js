@@ -1,4 +1,4 @@
-import routesUser from '../modules/User/router';
+import routesUser from '../modules/User';
 
 const routes = {
   '/users': routesUser,
