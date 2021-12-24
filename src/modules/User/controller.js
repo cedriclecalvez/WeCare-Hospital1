@@ -71,7 +71,7 @@ class UserController {
       user.access_token = jwt.sign(
         { id: user.id, email: user.email },
         config.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "24h" }
       );
       user.refresh_token = jwt.sign({ id: user.id }, config.JWT_SECRET, {
         expiresIn: "60d",
@@ -82,7 +82,7 @@ class UserController {
       res.header("Authorization", `Bearer ${user.access_token}`);
       res.cookie("refresh_token", user.refresh_token, {
         httpOnly: true,
-        expiresIn: "1h",
+        expiresIn: "24h",
       });
       res.status(200).json({ token: user.access_token });
     } catch (err) {

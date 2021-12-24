@@ -18,11 +18,11 @@ const morganMiddleware = morgan('combined', {
 });
 
 const middlewares = {
-  cors: cors(),
   apiLogger: morganMiddleware,
   json: express.json(),
   urlencoded: express.urlencoded({ extended: false }),
-  cookie: cookieParser()
+  cookie: cookieParser(),
+  cors: cors({credentials:true})
 };
 
 export default middlewares;
