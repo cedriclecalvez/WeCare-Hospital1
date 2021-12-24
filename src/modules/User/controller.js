@@ -22,14 +22,30 @@ class UserController {
 
   register = async (req, res, next) => {
     try {
-      const password = await bcrypt.hash(req.body.password, 10);
-      console.log("password hashed: ", password);
+      const { email, password } = { ...req.body };
+      
 
-      const user = await this.#models.create({
-        email: req.body.email,
-        password,
-      });
-      res.status(201).json(user);
+      if (!email || !password) {
+        throw new ApiError(403, "missing email or password or both");
+      }
+
+      const isUserExist = await this.#models.findOne({where: { email },});
+
+     
+
+      if(isUserExist) {
+        throw new ApiError(409, "This user already exist !");
+        
+      } else {
+        const password = await bcrypt.hash(req.body.password, 10);
+        console.log("password hashed: ", password);
+
+        const user = await this.#models.create({
+          email: req.body.email,
+          password,
+        });
+        res.status(201).json(user);
+      }
     } catch (err) {
       next(err);
     }
