@@ -41,7 +41,7 @@ const transports = [
   }),
   // create a logging target for HTTP logs
   new winston.transports.File({
-    filename: 'http.log',
+    filename: './logs/http.log',
     level: 'http',
     // process only HTTP logs
     format: filter('http'),

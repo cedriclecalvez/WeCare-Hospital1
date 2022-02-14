@@ -1,3 +1,5 @@
+import config  from "./constant";
+
 class Server {
   constructor(app) {
     this.app = app;
@@ -20,8 +22,10 @@ class Server {
   }
 
   routes(routes) {
+   
+
     for (const path in routes) {
-      this.app.use(path, routes[path]);
+      this.app.use(`${config.API_VERSION}${path}`, routes[path]);
     }
   }
 
