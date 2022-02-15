@@ -1,11 +1,15 @@
+import UserDao from './dao';
+import UserRepository from "./UserRepository"
+import UserService from "./service"
 import UserController from './controller';
-import User from './model';
-import router from './router';
+import UserRouter from './router';
 
-const models = User;
-console.log("models:",models);
+const UsersDao = UserDao;
+console.log("UsersDao:",UsersDao);
 
-const controller = new UserController(models);
-const routesUser = router(controller);
+const userRepository = new UserRepository(UsersDao);
+const userService = new UserService(userRepository);
+const userController  = new UserController(userService);
+const userRouter  = new UserRouter(userController);
 
-export default routesUser;
+export default userRouter ;

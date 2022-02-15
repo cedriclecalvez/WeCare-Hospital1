@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import config from "../config/constant";
 import ApiError from "../helpers/ApiError";
-import User from "../modules/User/model";
+import User from "../modules/User/dao";
 
 const isAuth = async (req, res, next) => {
   try {

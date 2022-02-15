@@ -2,17 +2,19 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import ApiError from "../../helpers/ApiError";
 import config from "../../config/constant";
-import User from "./model";
+import User from "./dao";
 
 class UserController {
   #models;
-  constructor(models) {
-    this.#models = models;
+  constructor(userService) {
+    // this.#models = models;
+    this.userService = userService
   }
 
   getAll = async (req, res, next) => {
     try {
-      const users = await this.#models.findAll();
+      // const users = await this.#models.findAll();
+      let users = await this.userService.getAll();
 
       res.status(200).json({ user: req.userID, users });
     } catch (err) {
@@ -22,30 +24,33 @@ class UserController {
 
   register = async (req, res, next) => {
     try {
-      const { email, password } = { ...req.body };
+      // const { email, password } = { ...req.body };
       
 
-      if (!email || !password) {
-        throw new ApiError(403, "missing email or password or both");
-      }
+      // if (!email || !password) {
+      //   throw new ApiError(403, "missing email or password or both");
+      // }
 
-      const isUserExist = await this.#models.findOne({where: { email },});
+      // const isUserExist = await this.#models.findOne({where: { email },});
 
      
 
-      if(isUserExist) {
-        throw new ApiError(409, "This user already exist !");
+      // if(isUserExist) {
+      //   throw new ApiError(409, "This user already exist !");
         
-      } else {
-        const password = await bcrypt.hash(req.body.password, 10);
-        console.log("password hashed: ", password);
+      // } else {
+      //   const password = await bcrypt.hash(req.body.password, 10);
+      //   console.log("password hashed: ", password);
 
-        const user = await this.#models.create({
-          email: req.body.email,
-          password,
-        });
-        res.status(201).json(user);
-      }
+      //   const user = await this.#models.create({
+      //     email: req.body.email,
+      //     password,
+      //   });
+      //   res.status(201).json(user);
+      // }
+
+      const user = await this.userService.register({...req.body});
+            res.status(201).json(user);
     } catch (err) {
       next(err);
     }

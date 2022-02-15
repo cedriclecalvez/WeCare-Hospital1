@@ -1,7 +1,7 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '../../config/database';
 
-class User extends Model {
+class UserDao extends Model {
   static init(sequelize) {
     return super.init(
       {
@@ -24,7 +24,7 @@ class User extends Model {
   }
 }
 
-User.init(db.sequelize);
+UserDao.init(db.sequelize);
 
 // const exclude = [
 //   'access_token',
@@ -42,4 +42,4 @@ User.init(db.sequelize);
 //   user.attributes = { exclude };
 // });
 
-export default User;
+export default UserDao;
