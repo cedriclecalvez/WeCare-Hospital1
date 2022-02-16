@@ -1,6 +1,16 @@
 import dotenv from 'dotenv';
 
+
 dotenv.config();
+
+//NODE_ENV = production
+//NODE_ENV = development
+// type nodeEnvType = 'development' | 'production';
+
+//General
+// export const NODE_ENV = (process.env.NODE_ENV as nodeEnvType) || 'development';
+// export const __prod__ = NODE_ENV === 'production';
+
 
 const config = {
   DB_DIALECT: process.env.DB_DIALECT || 'mysql',

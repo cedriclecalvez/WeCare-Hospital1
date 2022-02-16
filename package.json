@@ -5,20 +5,29 @@
   "repository": "https://github.com/mowafag-omer/wecare.git",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon --exec babel-node ./src/app.js",
+    "start": "nodemon --exec babel-node ./src/app.js",
+    "dev": "nodemon",
     "lintfix": "eslint src --fix --cache"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
     "@babel/node": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
+    "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/node": "^17.0.18",
+    "@types/validator": "^13.7.1",
     "eslint": "^8.3.0",
     "eslint-config-airbnb": "^19.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.15",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "ts-node": "^10.5.0",
+    "typeorm": "^0.2.41",
+    "typescript": "^4.5.5"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
