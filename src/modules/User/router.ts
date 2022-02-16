@@ -9,8 +9,8 @@ const router = (controller: UserController) => {
   router.route("/auth/register").post(controller.register);
   // router.route('/auth/alluser').get(controller.getAll);
   // router.route('/auth/refresh').get(refreshAccess);
-  // router.route('/auth/login').post(controller.login);
-  router.route("/allUsers").get(controller.getAll);
+  router.route('/auth/login').post(controller.login);
+  router.route("/allUsers").get(isAuth, controller.getAll);
 //   router.route("/allUsers").get(controller.getAll);
 
   return router;

@@ -1,19 +1,16 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
-
 @Entity("Users")
 export default class UserEntity extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @Column()
+  email: string;
 
-    @Column()
-    email: string;
+  @Column()
+  password: string;
 
-    @Column()
-    password: string;
-    
-    @Column()
-    access_token: string;
-
+  @Column()
+  access_token: string;
 }

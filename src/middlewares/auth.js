@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import config from "../config/constant";
 import ApiError from "../helpers/ApiError";
 import User from "../modules/User/entity";
+import {getManager} from "typeorm";
 
 const isAuth = async (req, res, next) => {
   try {
@@ -11,14 +12,14 @@ const isAuth = async (req, res, next) => {
     let access_token = req.headers.authorization.split(" ")[1];
     if (!access_token) throw new ApiError(401, "missing refresh_token");
 
-    const refresh_token = req.cookies.refresh_token;
-    if (!refresh_token)
-      return res.status(401).json("Access denied. Your session expired");
-
-    let user = await User.findOne({ where: { access_token, refresh_token } });
+    // const refresh_token = req.cookies.refresh_token;
+    // if (!refresh_token)
+    //   return res.status(401).json("Access denied. Your session expired");
+    const entityManager = getManager();
+    let user = await entityManager.findOne(User, { access_token } );
     console.log("findOne a user:    =>   ", user);
     if (!user)
-      return res.status(401).json("Access denied. Your session expired");
+      return res.status(401).json("1:Access denied. Your session expired");
 
     // const decoded = await jwt.verify(access_token, config.JWT_SECRET);
     await jwt.verify(access_token, config.JWT_SECRET);
@@ -27,7 +28,7 @@ const isAuth = async (req, res, next) => {
     // req.userID = decoded.id;
     next();
   } catch (error) {
-    res.status(401).json("Access denied. Your session expired");
+    res.status(401).json("2:Access denied. Your session expired");
   }
 };
 
