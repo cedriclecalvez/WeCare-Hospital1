@@ -5,6 +5,7 @@
   "repository": "https://github.com/mowafag-omer/wecare.git",
   "license": "MIT",
   "scripts": {
+    "build": "rimraf ./build && tsc",
     "start": "nodemon --exec babel-node ./src/app.js",
     "dev": "nodemon",
     "lintfix": "eslint src --fix --cache"

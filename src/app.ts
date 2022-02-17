@@ -1,6 +1,6 @@
 import express from 'express';
 import Server from './config/server';
-import db from './config/database';
+import {db} from './config/database';
 import middleware from './middlewares/middleware';
 import routes from "./config/routes"
 import errorHandler from "./middlewares/errorHandler"
