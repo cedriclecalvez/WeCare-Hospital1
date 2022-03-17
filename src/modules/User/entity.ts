@@ -13,4 +13,7 @@ export default class UserEntity extends BaseEntity {
 
   @Column()
   access_token: string;
+
+  @Column()
+  refresh_token: string;
 }

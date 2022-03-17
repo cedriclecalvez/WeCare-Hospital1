@@ -14,8 +14,8 @@ const options : ConnectionOptions= {
   "username": config.DB_USERNAME,
   "password": config.DB_PASSWORD,
   "database": config.DB_NAME,
-  "logging": true,
-  // synchronize: true,
+  "logging": false,
+  "synchronize": false,
   "entities": entities as any[],
   "migrations": ["src/config/migration/*.js"],
     "cli": {

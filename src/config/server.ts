@@ -14,7 +14,7 @@ class Server {
       await db.connect();
       console.log('[App]: Connected to Bdd');
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   }
 
@@ -27,7 +27,7 @@ class Server {
   routes(routes: any) {
     for (const path in routes) {
       this.app.use(`${config.API_VERSION}${path}`, routes[path]);
-    }
+      }
   }
 
   errorHandler(errorHandler: any) {

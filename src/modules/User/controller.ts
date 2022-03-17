@@ -44,13 +44,18 @@ export default class UserController implements IUserController {
   login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = await this.userService.login({...req.body})
+     
+      
+      const expireAt = new Date(Date.now() + (30 * 86400 * 1000))
 
       res.header("Authorization", `Bearer ${user.access_token}`);
-      // res.cookie("refresh_token", user.refresh_token, {
-      //   httpOnly: true,
-      //   expiresIn: "24h",
-      // });
-      res.status(200).json({ token: user.access_token });
+      
+      res.cookie('refresh_token', user.refresh_token, {
+        httpOnly: true,
+        expires: expireAt 
+      });
+      res.status(200).json({ result : "response ok"});
+      res.end()
     } catch (err) {
       next(err);
     }

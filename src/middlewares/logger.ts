@@ -3,8 +3,8 @@ import winston from 'winston';
 
 // filter function,
 // that will allow logging only the specified log level
-const filter = (level) =>
-  winston.format((info) => {
+const filter = (level:any) =>
+  winston.format((info:any) => {
     if (info.level === level) {
       return info;
     }

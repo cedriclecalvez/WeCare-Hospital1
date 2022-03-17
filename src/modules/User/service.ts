@@ -1,21 +1,21 @@
 import jwt from "jsonwebtoken";
 import UserDTO from "./dto";
 import ApiError from "../../helpers/ApiError";
-import UserRepository from "./UserRepository";
+import {IUserRepository} from "./UserRepository";
 import config from "../../config/constant";
 
 export default class UserService {
-  userRepository: UserRepository;
-  constructor(userRepository: UserRepository) {
+  userRepository: IUserRepository;
+  constructor(userRepository: IUserRepository) {
     this.userRepository = userRepository;
   }
 
   async getAll() {
     // findAll method
-    const users = await this.userRepository.findAll();
-    console.log("users====>", users);
+    const users: any= await this.userRepository.findAll();
+    console.log("users in getAll()====>", users);
 
-    return users.map((user) => new UserDTO(user));
+    return users.map((user: any) => new UserDTO(user));
   }
 
   async register(userData: { email: string; password: string }) {

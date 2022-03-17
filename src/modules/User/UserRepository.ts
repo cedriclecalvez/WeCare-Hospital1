@@ -3,14 +3,15 @@ import { EntityRepository, Repository, EntityManager } from "typeorm";
 import User from "./entity";
 
 export interface IUserRepository {
-  findAll(): Promise<User[] | undefined>;
+  findAll(): any;
   addNew({ email, password }: any): Promise<any>;
   findByEmail(email: string): Promise<any | undefined>;
-  compareHash(password: string, hash: string): Promise<Boolean>;
+  compareHash(password: string, hash: string): any;
 }
 
 @EntityRepository()
-class UserRepository implements IUserRepository {
+// class UserRepository implements IUserRepository {
+class UserRepository  {
   //    super()
   constructor(private manager: EntityManager) {}
 
@@ -23,7 +24,7 @@ class UserRepository implements IUserRepository {
   //   }
 
   async addNew({ email, password }: any) {
-    console.log("email addNew===", email);
+   
 
     const passHash = await bcrypt.hash(password, 10);
     console.log("password hashed: ", passHash);
@@ -32,6 +33,7 @@ class UserRepository implements IUserRepository {
       email,
       password: passHash,
       access_token: "",
+      refresh_token: ""
     });
   }
 

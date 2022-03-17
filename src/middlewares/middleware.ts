@@ -22,7 +22,7 @@ const middlewares = {
   json: express.json(),
   urlencoded: express.urlencoded({ extended: false }),
   cookie: cookieParser(),
-  cors: cors({credentials:true})
+  cors: cors({origin:'http://localhost:3000',credentials:true,exposedHeaders: 'Authorization',})
 };
 
 export default middlewares;
