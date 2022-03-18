@@ -32,14 +32,7 @@ jobs:
       TYPEORM_LOGGING: false
       TYPEORM_MIGRATIONS_RUN: false
       TYPEORM_ENTITIES: src/modules/**/entity.ts      
-    services:
-          mysql:
-            image: mysql:5.7
-            env:
-              MYSQL_ROOT_PASSWORD: root
-            ports: 
-              - 3309:3309
-            options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=30s --health-retries=30
+   
       
     steps:
     - name: Checkout
@@ -50,7 +43,7 @@ jobs:
           sudo systemctl enable mysql.service
           sudo systemctl start mysql.service
           sudo systemctl status mysql.service
-          sudo mysql --host 127.0.0.1 --port 3309 -uroot -proot -e "CREATE DATABASE hospitalSequelize"
+          sudo mysql --host 0.0.0.0 --port 3309 -uroot -proot -e "CREATE DATABASE hospitalSequelize"
     - name: Install node
       uses: actions/setup-node@v2
       with:
