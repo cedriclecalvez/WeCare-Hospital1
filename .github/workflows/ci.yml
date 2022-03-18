@@ -10,7 +10,7 @@ on:
   pull_request:
     types: [review_requested, opened, reopened, synchronize]
     branches:
-    - master
+    - main
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -50,7 +50,7 @@ jobs:
           sudo systemctl enable mysql.service
           sudo systemctl start mysql.service
           sudo systemctl status mysql.service
-          mysql --host 127.0.0.1 --port 3309 -uroot -proot -e "CREATE DATABASE hospitalSequelize"
+          sudo mysql --host 127.0.0.1 --port 3309 -uroot -proot -e "CREATE DATABASE hospitalSequelize"
     - name: Install node
       uses: actions/setup-node@v2
       with:
