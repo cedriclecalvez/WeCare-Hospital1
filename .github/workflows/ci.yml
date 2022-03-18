@@ -23,9 +23,9 @@ jobs:
       TYPEORM_CONNECTION: mysql
       TYPEORM_HOST: localhost
       TYPEORM_USERNAME: root
-      TYPEORM_PASSWORD: Valentina2021$
+      TYPEORM_PASSWORD: root
       TYPEORM_DATABASE: hospitalSequelize
-      TYPEORM_PORT: 3309
+      TYPEORM_PORT: 3306
       TYPEORM_SYNCHRONIZE: true
       TYPEORM_LOGGING: false
       TYPEORM_MIGRATIONS_RUN: false
