@@ -25,7 +25,7 @@ jobs:
       TYPEORM_CONNECTION: mysql
       TYPEORM_HOST: localhost
       TYPEORM_USERNAME: root
-      TYPEORM_PASSWORD: root
+      TYPEORM_PASSWORD: ""
       TYPEORM_DATABASE: hospitalSequelize
       TYPEORM_PORT: 3309
       TYPEORM_SYNCHRONIZE: true
@@ -36,7 +36,7 @@ jobs:
           mysql:
             image: mysql:5.7
             env:
-              MYSQL_ROOT_PASSWORD: root
+              MYSQL_ROOT_PASSWORD: ""
             ports: 
               - 3309
             options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
