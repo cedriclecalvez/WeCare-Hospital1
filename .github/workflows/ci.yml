@@ -12,9 +12,6 @@ on:
     branches:
     - main
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   test:
@@ -31,19 +28,29 @@ jobs:
       TYPEORM_SYNCHRONIZE: true
       TYPEORM_LOGGING: false
       TYPEORM_MIGRATIONS_RUN: false
-      TYPEORM_ENTITIES: src/modules/**/entity.ts      
-   
+      TYPEORM_ENTITIES: src/modules/**/entity.ts
+      
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+        - 3309:3309
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
       
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      
     - name: start mysql service
       run: |
           sudo /lib/systemd/systemd-sysv-install enable mysql
           sudo systemctl enable mysql.service
           sudo systemctl start mysql.service
           sudo systemctl status mysql.service
-          sudo mysql --host 127.0.0.1 --port 3309 -e "CREATE DATABASE hospitalSequelize"
+          mysql --host 127.0.0.1 --port 3309 -uroot -proot -e "CREATE DATABASE hospitalSequelize"
+          
     - name: Install node
       uses: actions/setup-node@v2
       with:
