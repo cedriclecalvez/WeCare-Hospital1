@@ -11,6 +11,10 @@ const app = express();
 
 const server = new Server(app);
 
+beforeAll(async () => {
+  await db.connect();
+});
+
 server.connecte(db);
 server.middlewares(middleware);
 server.routes(routes);
@@ -22,13 +26,6 @@ server.errorHandler(errorHandler);
 // const app = express();
 // const server = new Server(app);
 // const api = new App(routes, middlewares);
-
-beforeAll(async () => {
-  await db.connect();
-});
-afterAll(async () => {
-  await db.close();
-});
 
 
 
@@ -45,8 +42,6 @@ describe("post/users:", () => {
   });
 });
 
-
-
 describe("post /users :", () => {
   it("should return a  400 http status if your data is empty or invalid", async () => {
     try {
@@ -57,4 +52,8 @@ describe("post /users :", () => {
       expect(error.status).toBe(403);
     }
   });
+});
+
+afterAll(async () => {
+  await db.close();
 });
