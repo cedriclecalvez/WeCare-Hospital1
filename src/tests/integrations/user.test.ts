@@ -34,11 +34,11 @@ describe("post/users:", () => {
   it("should return a  201 http status", async () => {
     const res = await supertest(server.app)
       .post(config.API_VERSION + "/users/auth/register")
-      .send({ email: "d@test4.fr", password: "d1" })
+      .send({ email: "d@test5.fr", password: "d1" })
       .expect(201);
       
 
-    expect(res.body.email).toBe("d@test4.fr");
+    expect(res.body.email).toBe("d@test5.fr");
   });
 });
 
