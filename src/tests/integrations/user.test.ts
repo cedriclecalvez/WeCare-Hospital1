@@ -1,8 +1,8 @@
 import express from "express";
 import supertest from "supertest";
-import Server from "../../config/server";
-import { db } from "../../config/database";
 import config from "../../config/constant";
+import { db } from "../../config/database";
+import Server from "../../config/server";
 import middleware from "../../middlewares/middleware";
 import routes from "../../config/routes";
 import errorHandler from "../../middlewares/errorHandler";
@@ -37,11 +37,11 @@ describe("post/users:", () => {
   it("should return a  201 http status", async () => {
     const res = await supertest(server.app)
       .post(config.API_VERSION + "/users/auth/register")
-      .send({ email: "d@test2.fr", password: "d1" })
+      .send({ email: "d@test4.fr", password: "d1" })
       .expect(201);
       
 
-    expect(res.body.email).toBe("d@test2.fr");
+    expect(res.body.email).toBe("d@test4.fr");
   });
 });
 
