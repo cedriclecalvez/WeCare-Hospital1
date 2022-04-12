@@ -11,34 +11,27 @@ const app = express();
 
 const server = new Server(app);
 
-beforeAll(async () => {
-  await db.connect();
-});
-
 server.connecte(db);
 server.middlewares(middleware);
 server.routes(routes);
 server.errorHandler(errorHandler);
-// server.start(config.PORT);
 
-// attention les tests doivent etre executés en développent sur une bdd test dédiée aux tests et ne jamais faire de test en prod
-
-// const app = express();
-// const server = new Server(app);
-// const api = new App(routes, middlewares);
-
-
+beforeAll(async () => {
+  await db.connect();
+});
+afterAll(async () => {
+  await db.close();
+});
 
 // tester toutes les routes :
 describe("post/users:", () => {
   it("should return a  201 http status", async () => {
     const res = await supertest(server.app)
       .post(config.API_VERSION + "/users/auth/register")
-      .send({ email: "d@test5.fr", password: "d1" })
+      .send({ email: "d@test8.fr", password: "d1" })
       .expect(201);
-      
 
-    expect(res.body.email).toBe("d@test5.fr");
+    expect(res.body.email).toBe("d@test8.fr");
   });
 });
 
@@ -48,12 +41,8 @@ describe("post /users :", () => {
       await supertest(server.app)
         .post(config.API_VERSION + "/users/auth/register")
         .send({ email: "", password: "" });
-    } catch (error:any) {
+    } catch (error: any) {
       expect(error.status).toBe(403);
     }
   });
-});
-
-afterAll(async () => {
-  await db.close();
 });
