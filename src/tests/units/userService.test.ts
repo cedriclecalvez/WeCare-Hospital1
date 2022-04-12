@@ -2,6 +2,7 @@ import UserService from "../../modules/User/service";
 import UserRepositoryMock from "../mocks/userRepository.mock";
 import User from "../../modules/User/dto"
 
+
 const userRepositoryMock = new UserRepositoryMock()
 const userService = new UserService(userRepositoryMock);
 
@@ -10,9 +11,10 @@ describe("UserService unit test", () => {
     it("should throw an error if userdata is empty or null", async () => {
       try {
         await userService.register({ email: "", password: "ee" });
-      } catch (error: any) {
+      } catch (error:any) {
         expect(error.status).toBe(403);
         expect(error.message).toBe("missing email or password or both");
+        
       }
     });
 

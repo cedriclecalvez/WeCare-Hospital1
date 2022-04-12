@@ -20,4 +20,3 @@ const router = (controller: UserController) => {
 
 export default router;
 
-

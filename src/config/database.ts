@@ -7,7 +7,7 @@ const entities = [User];
 
 const connectionManager = getConnectionManager();
 
-const options : ConnectionOptions= {
+const options : ConnectionOptions = {
   "type": "mysql",
   "host": config.DB_HOST,
   "port": config.DB_PORT,

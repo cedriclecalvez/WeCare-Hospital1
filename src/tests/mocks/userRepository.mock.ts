@@ -1,8 +1,14 @@
 import User from "../../modules/User/dto";
-
+export interface IUserRepository {
+  findAll(): any;
+  addNew({ email, password }: any): Promise<any>;
+  findByEmail(email: string): Promise<any | undefined>;
+  compareHash(password: string, hash: string): any;
+}
 
 export default class UserRepositoryMock {
   users: User[];
+  
   constructor() {
     this.users = [];
   }
