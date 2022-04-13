@@ -63,7 +63,7 @@ jobs:
     - name: Run tests
       run: npm run test
 
-# CD - deploy  
+# CD --- deploy  
   build-and-deploy:
     needs: test
     runs-on: ubuntu-latest
