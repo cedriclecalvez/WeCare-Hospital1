@@ -10,3 +10,33 @@ export default class UserDTO {
         this.refresh_token = refresh_token        
     }
 }
+
+export class PractitionerDTO {
+    id: string | null;
+    firstName: string;
+    lastName: string;
+    cps: number;
+    User:string;
+    constructor({id,firstName,lastName,cps,User}: {id: string | null, firstName: string, lastName: string, cps: number, User: string}){
+        this.id = id,
+        this.firstName = firstName,
+        this.lastName = lastName,
+        this.cps = cps,
+        this.User = User
+    }
+}
+
+export class PatientDTO {
+    id: string | null;
+    firstName: string;
+    lastName: string;
+    securitySocialNumber: number;
+    User:string;
+    constructor({id,firstName,lastName,securitySocialNumber,User}: {id: string | null, firstName: string, lastName: string, securitySocialNumber: number, User: string}){
+        this.id = id,
+        this.firstName = firstName,
+        this.lastName = lastName,
+        this.securitySocialNumber = securitySocialNumber,
+        this.User = User
+    }
+}
