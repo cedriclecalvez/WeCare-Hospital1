@@ -62,7 +62,6 @@ jobs:
 
     - name: Run tests
       run: npm run test
-
 jobs:
   needs: test
   build-and-deploy:
