@@ -90,4 +90,4 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy app on VPS
-        run: rsync -avz ./build ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST}}:/var/www/html/WeCare-Hospital1/build
+        run: rsync -avz ./build ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST}}:/var/www/html/WeCare-Hospital1
