@@ -10,8 +10,8 @@
     "dev": "nodemon",
     "lintfix": "eslint src --fix --cache",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
-    "test": "jest",
-    "test:dev": "jest --watchAll --detectOpenHandles"
+    "test": "jest --detectOpenHandles --forceExit",
+    "test:dev": "jest --watchAll"
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
