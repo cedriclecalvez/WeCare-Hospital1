@@ -1,16 +1,17 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import ApiError from "../../helpers/ApiError";
-import config from "../../config/constant";
 import IUserService from "./service";
 import { NextFunction, Request, Response } from "express";
+import { ParamsDictionary } from "express-serve-static-core";
+import { ParsedQs } from "qs";
 
 
 
 export interface IUserController {
   userService: IUserService;
-  getAll(req: Request, res: Response, next: NextFunction): Promise<void>;
+  findAllUsers(req: Request, res: Response, next: NextFunction): Promise<void>;
+  findAllPractitioners(req: Request, res: Response, next: NextFunction): Promise<void>;
+  findAllPatients(req: Request, res: Response, next: NextFunction): Promise<void>;
   register(req: Request, res: Response, next: NextFunction): Promise<void>;
+  registerPatient(req: Request, res: Response, next: NextFunction): Promise<void>
   login(req: Request, res: Response, next: NextFunction): Promise<void>
 }
 
@@ -21,16 +22,33 @@ export default class UserController implements IUserController {
     this.userService = userService;
   }
 
-  getAll = async (req: Request, res: Response, next: NextFunction) => {
+  findAllUsers = async (req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction): Promise<void> => {
     try {
-      let users = await this.userService.getAll();
-
+      let users = await this.userService.getAllUsers();
       res.status(200).json({ user: users });
     } catch (err) {
       next(err);
   
     }
   };
+
+   findAllPatients = async (req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction): Promise<void> => {
+    try {
+      let patients = await this.userService.getAllPatients()
+      res.status(200).json({patients: patients})
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  findAllPractitioners = async (req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction): Promise<void> => {
+    try {
+      let practitioners = await this.userService.getAllPractitioners()
+      res.status(200).json({practitioners: practitioners})
+    } catch (error) {
+      next(error)
+    }
+  }
 
   register = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -40,6 +58,15 @@ export default class UserController implements IUserController {
       next(err);
     }
   };
+
+  registerPatient =async (req: Request, res: Response, next: NextFunction)=> {
+    try {
+      let patient = await this.userService.registerPatient(req.body)
+      res.status(200).json({patient: patient})
+    } catch (error) {
+      next(error)
+    }
+  } 
 
   login = async (req: Request, res: Response, next: NextFunction) => {
     try {

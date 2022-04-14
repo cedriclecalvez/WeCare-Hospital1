@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken";
-import UserDTO from "./dto";
+import UserDTO, { PractitionerDTO,PatientDTO } from "./dto";
 import ApiError from "../../helpers/ApiError";
 import {IUserRepository} from "./UserRepository";
 import config from "../../config/constant";
+import { patientType, practitionerType } from "../../types/entitiesTypes";
+
 
 export default class UserService {
   userRepository: IUserRepository;
@@ -10,12 +12,67 @@ export default class UserService {
     this.userRepository = userRepository;
   }
 
-  async getAll() {
+  async getAllPractitioners() {
+    const practitioner: practitionerType[] = await this.userRepository.findAllPractitioner()
+    return practitioner.map((practitioner: practitionerType)=> new PractitionerDTO(practitioner))
+  }
+
+  async getAllUsers() {
     // findAll method
-    const users: any= await this.userRepository.findAll();
+    const users: any= await this.userRepository.findAllUser();
     console.log("users in getAll()====>", users);
 
     return users.map((user: any) => new UserDTO(user));
+  }
+
+  async getAllPatients(){
+    const patients: patientType[] = await this.userRepository.findAllPatient();
+    return patients.map((patient: patientType)  => new PatientDTO(patient))
+  }
+
+  async registerPatient(patientData: patientType){
+    try {
+      
+      const { firstName, lastName,securitySocialNumber, User } = { ...patientData }
+      const data = {
+        id: null,
+        firstName: firstName,
+        lastName: lastName,
+        securitySocialNumber: securitySocialNumber,
+        User: User
+      }
+      console.log(data);
+      
+
+      if(!firstName){
+        throw "no firstname"
+      }
+      if(!lastName){
+        throw "no lastname"
+      }
+      if(!securitySocialNumber){
+        throw "no security social number"
+      }
+      if(!User){
+        throw "no user id"
+      }
+
+      if(firstName && lastName && securitySocialNumber && User){
+        const isUserExist = await this.userRepository.findByUserID(User);
+        console.log(isUserExist);
+        
+        if(isUserExist){
+          console.log('Add new patient');
+          
+          const newPatient: patientType = await this.userRepository.addNewPatient(data)
+          return new PatientDTO(newPatient)
+        }
+      }
+
+    } catch (error) {
+      return `Error : ${error}`
+    }
+    
   }
 
   async register(userData: { email: string; password: string }) {

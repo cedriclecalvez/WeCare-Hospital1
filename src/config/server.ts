@@ -1,4 +1,4 @@
-import { Express, Application } from 'express'
+import { Application } from 'express'
 import config  from "./constant";
 
 
