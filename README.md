@@ -1,5 +1,5 @@
-# We Care
-It's an application ...
+# WeCare
+The project is an application that allow to different type of persons, visitors, patient, doctor and admin. The different actor can use this application to consult the list of doctors and take an appointment; or create a profile and modify personal data
 
 <!-- ## Image application -->
 
@@ -27,14 +27,15 @@ You will also see any lint errors in the console.
 
 ## Database
 1/ Don't forget to put your nodemon.json in your src folder in api
-
-    DB_DIALECT
-    DB_NAME
-    DB_PASSWORD
-    DB_HOST
-    DB_PORT
-    PORT    
-    JWT_SECRET
+DB_DIALECT:
+        DB_NAME:
+        DB_USERNAME: 
+        DB_PASSWORD: 
+        DB_HOST: 
+        DB_PORT: 
+        PORT:
+        JWT_SECRET: 
+        API_VERSION: 
     
 2/ Don't forget to put your .env in your src folder in Web
 
@@ -50,7 +51,7 @@ You will also see any lint errors in the console.
 
 <!-- <img src="https://accentsconagua.com/img/images_15/mapping-relational-databases-and-sql-to-mongodb_8.png"  height="50"> -->
 
-<img src="https://cdn-images-1.medium.com/fit/t/1600/480/1*iDvsmUwzZQxJSKdL0xzwIA.png"  height="50">
+<!-- <img src="https://cdn-images-1.medium.com/fit/t/1600/480/1*iDvsmUwzZQxJSKdL0xzwIA.png"  height="50"> -->
 
 <img src="https://user-images.githubusercontent.com/13700/35731649-652807e8-080e-11e8-88fd-1b2f6d553b2d.png"  height="50">
 
@@ -73,11 +74,17 @@ You will also see any lint errors in the console.
 
 ## Diagrams
 Use Case diagram
-<!-- ![sequence diagram](cas_utilisation_...png) -->
+![sequence diagram](./assets//Diag%20useCases%20hospital.JPG)
 
 Sequence diagram: take an appointment
-<!-- ![sequence diagram](sequence-....png) -->
+![sequence diagram](./assets/Diag%20Sequence%20rdv%20hospital.JPG)
 
 Class diagram
-<!-- ![class diagram](diagramme_classes_.....png) -->
+![class diagram](./assets/Diagram%20class%20hospital.JPG)
+
+diagram MCD
+![class diagram](./assets/Diagram%20MCD%20hospital.JPG)
+
+diagram MPD
+![class diagram](./assets/Diagram%20MPD%20hospital.JPG)
 
