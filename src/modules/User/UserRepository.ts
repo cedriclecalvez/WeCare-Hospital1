@@ -3,21 +3,13 @@ import { EntityRepository, EntityManager } from "typeorm";
 import User from "./entity";
 import { PatientEntity, practitionerEntity } from "./entity";
 import { patientType,practitionerType,userType } from "../../types/entitiesTypes";
+import { IUserRepository } from "../interfaces/user.interface";
 
-export interface IUserRepository {
-  findAllUser(): Promise<userType[]>;
-  findAllPractitioner(): Promise<practitionerType[]>;
-  findAllPatient(): Promise<patientType[]>;
-  addNew({ email, password }: any): Promise<any>;
-  addNewPatient(patient: patientType):  Promise<{ firstName: string; lastName: string; securitySocialNumber: number; User: string; } & PatientEntity> ;
-  findByEmail(email: string): Promise<any | undefined>;
-  findByUserID(id: string): Promise< {} | undefined>
-  compareHash(password: string, hash: string): any;
-}
+
 
 @EntityRepository()
-// class UserRepository implements IUserRepository {
-class UserRepository  {
+class UserRepository implements IUserRepository {
+// class UserRepository  {
   //    super()
   constructor(private manager: EntityManager) {}
 

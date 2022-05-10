@@ -2,6 +2,8 @@ import IUserService from "./service";
 import { NextFunction, Request, Response } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
+import {PatientDTO, PractitionerDTO, UserDTO} from "./dto";
+import { patientType, practitionerType } from "../../types/entitiesTypes";
 
 
 
@@ -25,7 +27,7 @@ export default class UserController implements IUserController {
   findAllUsers = async (req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction): Promise<void> => {
     try {
       let users = await this.userService.getAllUsers();
-      res.status(200).json({ user: users });
+      res.status(200).json(users.map((user: any) => new UserDTO(user)));
     } catch (err) {
       next(err);
   
@@ -35,7 +37,7 @@ export default class UserController implements IUserController {
    findAllPatients = async (req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction): Promise<void> => {
     try {
       let patients = await this.userService.getAllPatients()
-      res.status(200).json({patients: patients})
+      res.status(200).json(patients.map((patient: patientType) => new PatientDTO(patient)))
     } catch (error) {
       next(error)
     }
@@ -44,7 +46,8 @@ export default class UserController implements IUserController {
   findAllPractitioners = async (req: Request<ParamsDictionary, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>>, next: NextFunction): Promise<void> => {
     try {
       let practitioners = await this.userService.getAllPractitioners()
-      res.status(200).json({practitioners: practitioners})
+      res.status(200).json(practitioners.map(
+        (practitioner: practitionerType) => new PractitionerDTO(practitioner)))
     } catch (error) {
       next(error)
     }
@@ -53,7 +56,7 @@ export default class UserController implements IUserController {
   register = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = await this.userService.register({ ...req.body });
-      res.status(201).json(user);
+      res.status(201).json(new UserDTO(user));
     } catch (err) {
       next(err);
     }
@@ -61,8 +64,8 @@ export default class UserController implements IUserController {
 
   registerPatient =async (req: Request, res: Response, next: NextFunction)=> {
     try {
-      let patient = await this.userService.registerPatient(req.body)
-      res.status(200).json({patient: patient})
+      let patient : any = await this.userService.registerPatient(req.body)
+      res.status(200).json(new PatientDTO(patient))
     } catch (error) {
       next(error)
     }

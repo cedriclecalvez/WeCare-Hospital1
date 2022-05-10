@@ -15,7 +15,7 @@ const router = (controller: UserController) => {
   router.route("/auth/allPatients").get(controller.findAllPatients)
   router.route("/auth/allPractitioners").get(controller.findAllPractitioners)
   router.route("/auth/registerPatients").post(controller.registerPatient)
-  router.route("/auth/registerPractitioners").post
+  router.route("new UserDTO(user)").post
   // router.route("/allUsers").get(isAuth, controller.getAll);
 //   router.route("/allUsers").get(controller.getAll);
 

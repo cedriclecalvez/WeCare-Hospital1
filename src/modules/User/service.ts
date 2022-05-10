@@ -1,10 +1,8 @@
 import jwt from "jsonwebtoken";
-import UserDTO, { PractitionerDTO,PatientDTO } from "./dto";
 import ApiError from "../../helpers/ApiError";
-import {IUserRepository} from "./UserRepository";
 import config from "../../config/constant";
 import { patientType, practitionerType } from "../../types/entitiesTypes";
-
+import { IUserRepository } from "../interfaces/user.interface";
 
 export default class UserService {
   userRepository: IUserRepository;
@@ -12,67 +10,22 @@ export default class UserService {
     this.userRepository = userRepository;
   }
 
-  async getAllPractitioners() {
-    const practitioner: practitionerType[] = await this.userRepository.findAllPractitioner()
-    return practitioner.map((practitioner: practitionerType)=> new PractitionerDTO(practitioner))
-  }
-
   async getAllUsers() {
     // findAll method
-    const users: any= await this.userRepository.findAllUser();
+    const users: any = await this.userRepository.findAllUser();
     console.log("users in getAll()====>", users);
-
-    return users.map((user: any) => new UserDTO(user));
+    return users;
   }
 
-  async getAllPatients(){
+  async getAllPatients() {
     const patients: patientType[] = await this.userRepository.findAllPatient();
-    return patients.map((patient: patientType)  => new PatientDTO(patient))
+    return patients;
   }
 
-  async registerPatient(patientData: patientType){
-    try {
-      
-      const { firstName, lastName,securitySocialNumber, User } = { ...patientData }
-      const data = {
-        id: null,
-        firstName: firstName,
-        lastName: lastName,
-        securitySocialNumber: securitySocialNumber,
-        User: User
-      }
-      console.log(data);
-      
-
-      if(!firstName){
-        throw "no firstname"
-      }
-      if(!lastName){
-        throw "no lastname"
-      }
-      if(!securitySocialNumber){
-        throw "no security social number"
-      }
-      if(!User){
-        throw "no user id"
-      }
-
-      if(firstName && lastName && securitySocialNumber && User){
-        const isUserExist = await this.userRepository.findByUserID(User);
-        console.log(isUserExist);
-        
-        if(isUserExist){
-          console.log('Add new patient');
-          
-          const newPatient: patientType = await this.userRepository.addNewPatient(data)
-          return new PatientDTO(newPatient)
-        }
-      }
-
-    } catch (error) {
-      return `Error : ${error}`
-    }
-    
+  async getAllPractitioners() {
+    const practitioner: practitionerType[] =
+      await this.userRepository.findAllPractitioner();
+    return practitioner;
   }
 
   async register(userData: { email: string; password: string }) {
@@ -89,7 +42,7 @@ export default class UserService {
     } else {
       const newUser: any = await this.userRepository.addNew(userData);
 
-      return new UserDTO(newUser);
+      return newUser;
     }
   }
 
@@ -105,9 +58,11 @@ export default class UserService {
     const user: any = await this.userRepository.findByEmail(email);
     if (!user) throw new ApiError(400, "unable to find user");
 
-    const passwordMatch = await this.userRepository.compareHash(userData.password, user.password);
+    const passwordMatch = await this.userRepository.compareHash(
+      userData.password,
+      user.password
+    );
     if (!passwordMatch) throw new ApiError(403, "User password do not match");
-    
 
     user.access_token = jwt.sign(
       { id: user.id, email: user.email },
@@ -119,7 +74,52 @@ export default class UserService {
     });
 
     await user.save();
-    
-    return new UserDTO(user)
+
+    return user;
+  }
+
+
+  async registerPatient(patientData: patientType) {
+    try {
+      const { firstName, lastName, securitySocialNumber, User } = {
+        ...patientData,
+      };
+      const data = {
+        id: null,
+        firstName: firstName,
+        lastName: lastName,
+        securitySocialNumber: securitySocialNumber,
+        User: User,
+      };
+      console.log(data);
+
+      if (!firstName) {
+        throw "no firstname";
+      }
+      if (!lastName) {
+        throw "no lastname";
+      }
+      if (!securitySocialNumber) {
+        throw "no security social number";
+      }
+      if (!User) {
+        throw "no user id";
+      }
+
+      if (firstName && lastName && securitySocialNumber && User) {
+        const isUserExist = await this.userRepository.findByUserID(User);
+        console.log(isUserExist);
+
+        if (isUserExist) {
+          console.log("Add new patient");
+
+          const newPatient: patientType =
+            await this.userRepository.addNewPatient(data);
+          return newPatient;
+        }
+      }
+    } catch (error) {
+      return `Error : ${error}`;
+    }
   }
 }

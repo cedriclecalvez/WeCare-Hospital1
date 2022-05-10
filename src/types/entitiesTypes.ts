@@ -1,5 +1,5 @@
 export type patientType = {
-    id: string | null,
+    id: string | null ,
     firstName: string,
     lastName: string,
     securitySocialNumber: number,
