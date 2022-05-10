@@ -1,27 +1,31 @@
-import User from "../../modules/User/dto";
+import { EntityManager, EntityRepository } from "typeorm";
+import { IUserRepository } from "../../modules/interfaces/user.interface";
+import {UserDTO} from "../../modules/User/dto";
 import { PatientEntity, practitionerEntity } from "../../modules/User/entity";
 
 import { patientType,practitionerType,userType } from "../../types/entitiesTypes";
 
-export interface IUserRepository {
-  // findAll(): any;
-  addNew({ email, password }: any): Promise<any>;
-  findByEmail(email: string): Promise<any | undefined>;
-  compareHash(password: string, hash: string): any;
-  findByUserID(id: string): Promise< {} | undefined>
-  addNewPatient(patient: patientType):  Promise<{ firstName: string; lastName: string; securitySocialNumber: number; User: string; } & PatientEntity> ;
-  findAllUser(): Promise<userType[]>;
-  findAllPractitioner(): Promise<practitionerType[]>;
-  findAllPatient(): Promise<patientType[]>;
 
-}
+@EntityRepository()
 
-export default class UserRepositoryMock {
-  users: User[];
+export default class UserRepositoryMock implements IUserRepository{
+  users: UserDTO[]=[];
   
-  constructor() {
-    this.users = [];
+  
+  
+  findByUserID(id: string): Promise<{} | undefined> {
+    throw new Error("Method not implemented.");
   }
+  addNewPatient(patient: patientType): Promise<{ firstName: string; lastName: string; securitySocialNumber: number; User: string; } & PatientEntity> {
+    throw new Error("Method not implemented.");
+  }
+  findAllPractitioner(): Promise<practitionerType[]> {
+    throw new Error("Method not implemented.");
+  }
+  findAllPatient(): Promise<patientType[]> {
+    throw new Error("Method not implemented.");
+  }
+
 
   async findAllUser() {
     return this.users;
@@ -31,7 +35,7 @@ export default class UserRepositoryMock {
   //     return await this.manager.findOne(User, {email: email});
   //   }
 
-  async addNew(user: User) {
+  async addNew(user: UserDTO) {
     this.users.push(user);
 
     return user;

@@ -1,8 +1,9 @@
 import { patientType, practitionerType, userType } from "../../types/entitiesTypes";
+import User from "../User/entity";
 import { PatientEntity } from "../User/entity";
 
 export interface IUserRepository {
-    findAllUser(): Promise<userType[]>;
+    findAllUser(): Promise<any[]>;
     findAllPractitioner(): Promise<practitionerType[]>;
     findAllPatient(): Promise<patientType[]>;
     addNew({ email, password }: any): Promise<any>;

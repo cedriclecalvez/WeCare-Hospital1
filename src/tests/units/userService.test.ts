@@ -1,6 +1,6 @@
 import UserService from "../../modules/User/service";
 import UserRepositoryMock from "../mocks/userRepository.mock";
-import User from "../../modules/User/dto"
+import {UserDTO} from "../../modules/User/dto"
 
 
 const userRepositoryMock = new UserRepositoryMock()
@@ -20,11 +20,11 @@ describe("UserService unit test", () => {
 
     it("expect new user with specified data", async () => {
       const user = await userService.register({
-        email: "ee",
-        password: "ee",
+        email: "ep",
+        password: "ep",
       });
-      expect(user.email).toBe("ee");
-      expect(user instanceof User).toBe(true);
+      expect(user.email).toBe("ep");
+      // expect(user instanceof UserDTO).toBe(true);
     });
   });
 });
