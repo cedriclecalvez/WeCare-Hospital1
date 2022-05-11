@@ -4,18 +4,19 @@ import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import {PatientDTO, PractitionerDTO, UserDTO} from "./dto";
 import { patientType, practitionerType } from "../../types/entitiesTypes";
+import { IUserController } from "../interfaces/user.interface";
 
 
 
-export interface IUserController {
-  userService: IUserService;
-  findAllUsers(req: Request, res: Response, next: NextFunction): Promise<void>;
-  findAllPractitioners(req: Request, res: Response, next: NextFunction): Promise<void>;
-  findAllPatients(req: Request, res: Response, next: NextFunction): Promise<void>;
-  register(req: Request, res: Response, next: NextFunction): Promise<void>;
-  registerPatient(req: Request, res: Response, next: NextFunction): Promise<void>
-  login(req: Request, res: Response, next: NextFunction): Promise<void>
-}
+// export interface IUserController {
+//   userService: IUserService;
+//   findAllUsers(req: Request, res: Response, next: NextFunction): Promise<void>;
+//   findAllPractitioners(req: Request, res: Response, next: NextFunction): Promise<void>;
+//   findAllPatients(req: Request, res: Response, next: NextFunction): Promise<void>;
+//   register(req: Request, res: Response, next: NextFunction): Promise<void>;
+//   registerPatient(req: Request, res: Response, next: NextFunction): Promise<void>
+//   login(req: Request, res: Response, next: NextFunction): Promise<void>
+// }
 
 export default class UserController implements IUserController {
   userService: IUserService;

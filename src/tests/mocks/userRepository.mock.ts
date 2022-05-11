@@ -1,22 +1,37 @@
 import { EntityManager, EntityRepository } from "typeorm";
 import { IUserRepository } from "../../modules/interfaces/user.interface";
-import {UserDTO} from "../../modules/User/dto";
+import { UserDTO } from "../../modules/User/dto";
 import { PatientEntity, practitionerEntity } from "../../modules/User/entity";
 
-import { patientType,practitionerType,userType } from "../../types/entitiesTypes";
-
+import {
+  patientType,
+  practitionerType,
+  userType,
+} from "../../types/entitiesTypes";
 
 @EntityRepository()
+export default class UserRepositoryMock implements IUserRepository {
+  users: UserDTO[] = [];
 
-export default class UserRepositoryMock implements IUserRepository{
-  users: UserDTO[]=[];
-  
-  
-  
   findByUserID(id: string): Promise<{} | undefined> {
     throw new Error("Method not implemented.");
+  }  
+  async findAllUser() {
+    return this.users;
   }
-  addNewPatient(patient: patientType): Promise<{ firstName: string; lastName: string; securitySocialNumber: number; User: string; } & PatientEntity> {
+  async addNew(user: UserDTO) {
+    this.users.push(user);
+    return user;
+  }
+  async findByEmail(email: string) {
+    const users = this.users.filter((user) => user.email === email);
+    return users[0];
+  }
+  compareHash = (password: string, hash: string) => password;
+
+  addNewPatient(
+    patient: patientType
+  ): Promise<{firstName: string;lastName: string;securitySocialNumber: number;User: string;} & PatientEntity> {
     throw new Error("Method not implemented.");
   }
   findAllPractitioner(): Promise<practitionerType[]> {
@@ -26,29 +41,4 @@ export default class UserRepositoryMock implements IUserRepository{
     throw new Error("Method not implemented.");
   }
 
-
-  async findAllUser() {
-    return this.users;
-  }
-
-  //   async findOne(email) {
-  //     return await this.manager.findOne(User, {email: email});
-  //   }
-
-  async addNew(user: UserDTO) {
-    this.users.push(user);
-
-    return user;
-  }
-
-  async findByEmail(email: string) {
-    const users = this.users.filter((user) => user.email === email);
-    return users[0];
-  }
-
-
-
-  compareHash = (password: string, hash: string) => password
-
- 
 }
